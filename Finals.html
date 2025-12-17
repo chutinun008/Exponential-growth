@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chutinun | Engineering Portfolio</title>
+    
+    <link rel="icon" type="image/png" href="https://placehold.co/32x32/white/black?text=C"> 
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.css">
+
+    <!-- Fonts: Rajdhani for headings (Tech look), Inter for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font for Thai (Prompt) -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Default English Font */
+            color: #ffffff;
+            background-color: #000000;
+            overflow-x: hidden;
+        }
+        
+        /* Apply Thai font when lang is 'th' */
+        body.lang-th {
+            font-family: 'Prompt', sans-serif;
+        }
+        
+        h1, h2, h3, .nav-link, .btn-spacex, .section-title, #lang-switch {
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        body.lang-th h1, body.lang-th h2, body.lang-th h3, 
+        body.lang-th .nav-link, body.lang-th .btn-spacex, 
+        body.lang-th .section-title, body.lang-th #lang-switch {
+            font-family: 'Prompt', sans-serif;
+            text-transform: none; /* Thai usually doesn't use uppercase styling */
+        }
+
+        /* SpaceX Style Button */
+        .btn-spacex {
+            position: relative;
+            display: inline-block;
+            padding: 12px 40px;
+            border: 2px solid white;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: hidden;
+            z-index: 1;
+            background: transparent;
+            cursor: pointer;
+        }
+        
+        .btn-spacex::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: -1;
+        }
+
+        .btn-spacex:hover {
+            color: black;
+        }
+
+        .btn-spacex:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Navigation */
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: white;
+            position: relative;
+            padding-bottom: 2px;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Full Screen Sections */
+        .fullscreen-section {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+        #mobile-menu.closed {
+            transform: translateX(100%);
+        }
+
+        /* Language Switcher */
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.5);
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-btn.active {
+            color: white;
+            border-color: white;
+            background: rgba(255,255,255,0.1);
+        }
+        .lang-btn:first-child {
+            border-right: none;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+        .lang-btn:last-child {
+            border-left: none;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-white selection:text-black">
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 transition-all duration-300" id="main-header">
+        <div class="container mx-auto px-6 py-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-widest uppercase z-50 flex items-center gap-2">
+                GOLF / CHUTINUN
+            </a>
+            
+            <div class="flex items-center gap-8">
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link" data-i18n="nav_home">HOME</a>
+                    <a href="#about" class="nav-link" data-i18n="nav_about">ABOUT</a>
+                    <a href="#skills" class="nav-link" data-i18n="nav_skills">SKILLS</a>
+                    <a href="#showcase" class="nav-link" data-i18n="nav_projects">PROJECTS</a>
+                    <a href="#contact" class="nav-link" data-i18n="nav_contact">CONTACT</a>
+                </nav>
+
+                <!-- Language Switcher: EN First -->
+                <div class="flex items-center z-50">
+                    <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="setLanguage('th')">TH</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="menu-btn" class="md:hidden z-50 text-white focus:outline-none">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black z-40 flex flex-col justify-center items-center space-y-8 closed md:hidden">
+            <a href="#home" class="text-2xl font-bold uppercase hover:text-gray-400 mobile-link" data-i18n="nav_home">Home</a>
+            <a href="#about" class="text-2xl font-bold uppercase hover:text-gray-400 mobile-link" data-i18n="nav_about">About</a>
+            <a href="#skills" class="text-2xl font-bold uppercase hover:text-gray-400 mobile-link" data-i18n="nav_skills">Skills</a>
+            <a href="#showcase" class="text-2xl font-bold uppercase hover:text-gray-400 mobile-link" data-i18n="nav_projects">Projects</a>
+            <a href="#contact" class="text-2xl font-bold uppercase hover:text-gray-400 mobile-link" data-i18n="nav_contact">Contact</a>
+        </div>
+    </header>
+
+    <!-- SECTION 1: HERO -->
+    <section id="home" class="fullscreen-section" style="background-image: url('images/bbbb.jpg');">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="container mx-auto px-6 relative z-10 pt-20">
+            <div class="max-w-3xl" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-xl md:text-2xl tracking-[0.2em] mb-2 font-light" data-i18n="hero_role">CIVIL ENGINEERING STUDENT</h2>
+                <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tight leading-none">CHUTINUN<br>ARANYA</h1>
+                <p class="text-gray-300 text-lg md:text-xl max-w-xl mb-10 font-light" data-i18n="hero_desc">
+                    PASSIONATE ABOUT ENGINEERING, TECHNOLOGY, AND AI.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#showcase" class="btn-spacex text-center" data-i18n="btn_projects">VIEW PROJECTS</a>
+                    <a href="My_CV.pdf" download class="btn-spacex text-center" data-i18n="btn_cv">DOWNLOAD CV</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-8 h-8 text-white/50"></i>
+        </div>
+    </section>
+
+    <!-- SECTION 2: ABOUT -->
+    <section id="about" class="relative py-24 border-b border-gray-900 bg-cover bg-center" style="background-image: url('images/dam.jpg');">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/80"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="lg:w-1/2" data-aos="fade-right">
+                    <img src="images/me.jpg" alt="Profile" class="w-full max-w-xs mx-auto rounded-sm shadow-2xl object-cover">
+                </div>
+                <div class="lg:w-1/2" data-aos="fade-left">
+                    <h3 class="text-sky-500 tracking-widest text-sm font-bold mb-2" data-i18n="about_intro">01 / INTRODUCTION</h3>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8" data-i18n="about_title">WHO AM I</h2>
+                    <!-- Default English Text -->
+                    <p class="text-gray-400 leading-relaxed mb-6" data-i18n="about_desc">
+                        Civil engineering student who loves problem-solving and innovation. Integrating engineering knowledge with technology to create efficient works. Learning from nature, focusing on user-centric design.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm mt-8 border-t border-gray-800 pt-8">
+                        <div>
+                            <span class="block text-gray-500 uppercase text-xs tracking-wider mb-1" data-i18n="label_name">Name</span>
+                            <span class="font-medium">Chutinun Aranya</span>
+                        </div>
+                        <div>
+                             <span class="block text-gray-500 uppercase text-xs tracking-wider mb-1" data-i18n="label_edu">Education</span>
+                            <span class="font-medium" data-i18n="value_edu">KMITL</span>
+                        </div>
+                        <div>
+                             <span class="block text-gray-500 uppercase text-xs tracking-wider mb-1" data-i18n="label_email">Email</span>
+                            <span class="font-medium">golf.fmr@gmail.com</span>
+                        </div>
+                        <div>
+                             <span class="block text-gray-500 uppercase text-xs tracking-wider mb-1" data-i18n="label_gpa">GPA</span>
+                            <span class="font-medium">3.XX</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: SKILLS -->
+    <section id="skills" class="relative py-32 border-b border-gray-900 bg-cover bg-center" style="background-image: url('images/truss.jpg');">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/80"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 tracking-widest" data-aos="fade-up" data-i18n="skills_title">TECHNOLOGIES & TOOLS</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8" data-aos="fade-up" data-aos-delay="200">
+                <div class="p-4 border border-gray-800 hover:border-white transition-colors duration-300 group bg-black/50 backdrop-blur-sm">
+                    <div class="h-12 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><img src="images/ppp.png" class="h-10 opacity-70 group-hover:opacity-100" alt="Python"></div>
+                    <h3 class="text-sm text-gray-400 group-hover:text-white">PYTHON</h3>
+                </div>
+                <div class="p-4 border border-gray-800 hover:border-white transition-colors duration-300 group bg-black/50 backdrop-blur-sm">
+                    <div class="h-12 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><img src="images/cc.png" class="h-10 opacity-70 group-hover:opacity-100" alt="AutoCAD"></div>
+                    <h3 class="text-sm text-gray-400 group-hover:text-white">AUTOCAD</h3>
+                </div>
+                <div class="p-4 border border-gray-800 hover:border-white transition-colors duration-300 group bg-black/50 backdrop-blur-sm">
+                    <div class="h-12 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><img src="images/rr.png" class="h-10 opacity-70 group-hover:opacity-100" alt="Revit"></div>
+                    <h3 class="text-sm text-gray-400 group-hover:text-white">REVIT</h3>
+                </div>
+                <div class="p-4 border border-gray-800 hover:border-white transition-colors duration-300 group bg-black/50 backdrop-blur-sm">
+                    <div class="h-12 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><img src="images/jj.png" class="h-10 opacity-70 group-hover:opacity-100" alt="JS"></div>
+                    <h3 class="text-sm text-gray-400 group-hover:text-white">JAVASCRIPT</h3>
+                </div>
+                 <div class="p-4 border border-gray-800 hover:border-white transition-colors duration-300 group bg-black/50 backdrop-blur-sm">
+                    <div class="h-12 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><img src="images/mm.png" class="h-10 opacity-70 group-hover:opacity-100" alt="Mathcad"></div>
+                    <h3 class="text-sm text-gray-400 group-hover:text-white">MATHCAD</h3>
+                </div>
+                 <div class="p-4 border border-gray-800 hover:border-white transition-colors duration-300 group bg-black/50 backdrop-blur-sm">
+                    <div class="h-12 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><img src="images/vvv.png" class="h-10 opacity-70 group-hover:opacity-100" alt="VS Code"></div>
+                    <h3 class="text-sm text-gray-400 group-hover:text-white">VS CODE</h3>
+                </div>
+            </div>
+            
+            <div class="mt-12">
+                <button id="show-all-skills-btn" class="btn-spacex text-sm" data-i18n="btn_view_tools">VIEW ALL TOOLS</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: SHOWCASE -->
+    <section id="showcase" class="relative pt-24 pb-12 bg-cover bg-center" style="background-image: url('images/tunnel.jpg');">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/80"></div>
+        
+        <div class="container mx-auto px-6 mb-12 flex justify-between items-end relative z-10">
+            <div>
+                 <h3 class="text-sky-500 tracking-widest text-sm font-bold mb-2" data-i18n="showcase_intro">02 / PORTFOLIO</h3>
+                <h2 class="text-4xl font-bold" data-i18n="showcase_title">LATEST MISSIONS</h2>
+            </div>
+            
+            <div id="showcase-tabs" class="flex gap-6">
+                <button data-content="projects" class="showcase-tab active text-gray-500 hover:text-white uppercase font-bold tracking-wider transition-colors" data-i18n="tab_projects">Projects</button>
+                <button data-content="certificates" class="showcase-tab text-gray-500 hover:text-white uppercase font-bold tracking-wider transition-colors" data-i18n="tab_certs">Certificates</button>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10" id="projects-content">
+            <!-- Featured Project -->
+            <div class="relative w-full h-[500px] mb-8 group overflow-hidden bg-gray-900" data-aos="fade-up">
+                <img src="images/project.PNG" alt="Main Project" class="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500">
+                <div class="absolute bottom-0 left-0 p-8 md:p-12 w-full">
+                    <h3 class="text-3xl md:text-5xl font-bold mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500" data-i18n="proj_1_title">PORTFOLIO WEBSITE</h3>
+                    <p class="text-gray-300 max-w-xl mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100" data-i18n="proj_1_desc">
+                        HTML CSS JavaScript Development for modern portfolio creation.
+                    </p>
+                    <a href="#" class="btn-spacex text-sm px-8 py-3" data-i18n="btn_view_demo">VIEW DEMO</a>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-zinc-900 group relative aspect-[4/3] overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                     <img src="images/3.PNG" class="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-700">
+                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                     <div class="absolute bottom-0 left-0 p-6">
+                        <h4 class="text-xl font-bold mb-1" data-i18n="proj_2_title">NUMERICAL METHODS</h4>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="proj_2_desc">Python Calculation</p>
+                        <span class="text-xs font-bold uppercase tracking-widest border-b border-white pb-1" data-i18n="btn_view_details">View Details</span>
+                     </div>
+                </div>
+
+                <div class="bg-zinc-900 group relative aspect-[4/3] overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                     <img src="images/tt.PNG" class="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-700">
+                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                     <div class="absolute bottom-0 left-0 p-6">
+                        <h4 class="text-xl font-bold mb-1" data-i18n="proj_3_title">TRAPEZOIDAL RULE</h4>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="proj_3_desc">Simulation & Math</p>
+                         <span class="text-xs font-bold uppercase tracking-widest border-b border-white pb-1" data-i18n="btn_view_details">View Details</span>
+                     </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                 <button id="show-more-projects" class="btn-spacex text-sm" data-i18n="btn_view_missions">VIEW ALL MISSIONS</button>
+            </div>
+        </div>
+
+        <div id="certificates-content" class="hidden container mx-auto px-6 relative z-10">
+             <div class="grid md:grid-cols-3 gap-6">
+                <img src="images/11.jpg" class="w-full opacity-80 hover:opacity-100 transition-opacity border border-gray-800">
+                <img src="https://placehold.co/600x400/111/333?text=Cert+2" class="w-full opacity-80 hover:opacity-100 transition-opacity border border-gray-800">
+                <img src="https://placehold.co/600x400/111/333?text=Cert+3" class="w-full opacity-80 hover:opacity-100 transition-opacity border border-gray-800">
+             </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: CONTACT -->
+    <section id="contact" class="relative py-24 border-t border-gray-900 bg-cover bg-center" style="background-image: url('images/blueprint.jpg');">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/80"></div>
+        
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl font-bold mb-12 tracking-wider" data-i18n="contact_title">CONTACT</h2>
+            
+            <div class="flex flex-wrap justify-center gap-8 md:gap-16 mb-16">
+                <a href="https://github.com/your-username" class="flex flex-col items-center group">
+                    <div class="w-16 h-16 border border-gray-700 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 mb-4 bg-black/50 backdrop-blur-sm">
+                        <i data-lucide="github" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-sm font-bold tracking-widest text-gray-500 group-hover:text-white">GITHUB</span>
+                </a>
+                <a href="https://linkedin.com/in/your-profile" class="flex flex-col items-center group">
+                    <div class="w-16 h-16 border border-gray-700 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 mb-4 bg-black/50 backdrop-blur-sm">
+                        <i data-lucide="linkedin" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-sm font-bold tracking-widest text-gray-500 group-hover:text-white">LINKEDIN</span>
+                </a>
+                <a href="mailto:golf.fmr@gmail.com" class="flex flex-col items-center group">
+                    <div class="w-16 h-16 border border-gray-700 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 mb-4 bg-black/50 backdrop-blur-sm">
+                        <i data-lucide="mail" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-sm font-bold tracking-widest text-gray-500 group-hover:text-white">EMAIL</span>
+                </a>
+            </div>
+
+            <footer class="text-gray-600 text-xs tracking-widest uppercase" data-i18n="footer">
+                &copy; 2025 GOLF CHUTINUN. ALL RIGHTS RESERVED.
+            </footer>
+        </div>
+    </section>
+
+    <!-- Skills Modal -->
+    <div id="skills-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
+        <div id="modal-overlay" class="absolute inset-0 bg-black/90 backdrop-blur-md"></div>
+        <div class="relative bg-zinc-900 border border-gray-800 p-8 w-full max-w-4xl max-h-[80vh] overflow-y-auto m-4">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-2xl font-bold uppercase tracking-wider" data-i18n="modal_title">All Tools</h3>
+                <button id="modal-close-btn" class="text-gray-500 hover:text-white">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="modal-skills-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 50 });
+        lucide.createIcons();
+
+        // --- LANGUAGE SWITCHER LOGIC ---
+        const translations = {
+            en: {
+                nav_home: "HOME",
+                nav_about: "ABOUT",
+                nav_skills: "SKILLS",
+                nav_projects: "PROJECTS",
+                nav_contact: "CONTACT",
+                hero_role: "CIVIL ENGINEERING STUDENT",
+                hero_desc: "PASSIONATE ABOUT ENGINEERING, TECHNOLOGY, AND AI.",
+                btn_projects: "VIEW PROJECTS",
+                btn_cv: "DOWNLOAD CV",
+                about_intro: "01 / INTRODUCTION",
+                about_title: "WHO AM I",
+                about_desc: "Civil engineering student who loves problem-solving and innovation. Integrating engineering knowledge with technology to create efficient works. Learning from nature, focusing on user-centric design.",
+                label_name: "Name",
+                label_edu: "Education",
+                value_edu: "KMITL",
+                label_email: "Email",
+                label_gpa: "GPA",
+                skills_title: "TECHNOLOGIES & TOOLS",
+                btn_view_tools: "VIEW ALL TOOLS",
+                showcase_intro: "02 / PORTFOLIO",
+                showcase_title: "LATEST MISSIONS",
+                tab_projects: "PROJECTS",
+                tab_certs: "CERTIFICATES",
+                proj_1_title: "PORTFOLIO WEBSITE",
+                proj_1_desc: "HTML CSS JavaScript Development for modern portfolio creation.",
+                btn_view_demo: "VIEW DEMO",
+                proj_2_title: "NUMERICAL METHODS",
+                proj_2_desc: "Python Calculation",
+                btn_view_details: "View Details",
+                proj_3_title: "TRAPEZOIDAL RULE",
+                proj_3_desc: "Simulation & Math",
+                btn_view_missions: "VIEW ALL MISSIONS",
+                contact_title: "CONTACT",
+                footer: "&copy; 2025 GOLF CHUTINUN. ALL RIGHTS RESERVED.",
+                modal_title: "All Tools"
+            },
+            th: {
+                nav_home: "หน้าหลัก",
+                nav_about: "เกี่ยวกับ",
+                nav_skills: "ทักษะ",
+                nav_projects: "ผลงาน",
+                nav_contact: "ติดต่อ",
+                hero_role: "นักศึกษาวิศวกรรมโยธา",
+                hero_desc: "มีความหลงใหลในวิศวกรรม เทคโนโลยี และ AI",
+                btn_projects: "ดูผลงาน",
+                btn_cv: "ดาวน์โหลด CV",
+                about_intro: "01 / แนะนำตัว",
+                about_title: "ผมคือใคร",
+                about_desc: "นักศึกษาวิศวกรรมโยธาที่รักในการแก้ปัญหาและสร้างสรรค์สิ่งใหม่ๆ ผสมผสานความรู้ด้านวิศวกรรมเข้ากับเทคโนโลยีเพื่อสร้างสรรค์ผลงานที่มีประสิทธิภาพ เรียนรู้จากธรรมชาติ มุ่งเน้นการออกแบบที่คำนึงถึงผู้ใช้งานเป็นหลัก",
+                label_name: "ชื่อ",
+                label_edu: "การศึกษา",
+                value_edu: "สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง",
+                label_email: "อีเมล",
+                label_gpa: "เกรดเฉลี่ย",
+                skills_title: "เทคโนโลยีและเครื่องมือ",
+                btn_view_tools: "ดูเครื่องมือทั้งหมด",
+                showcase_intro: "02 / ผลงาน",
+                showcase_title: "ภารกิจล่าสุด",
+                tab_projects: "โปรเจกต์",
+                tab_certs: "ใบรับรอง",
+                proj_1_title: "เว็บไซต์พอร์ตโฟลิโอ",
+                proj_1_desc: "พัฒนาด้วย HTML CSS JavaScript สำหรับสร้างพอร์ตโฟลิโอที่ทันสมัย",
+                btn_view_demo: "ดูตัวอย่าง",
+                proj_2_title: "ระเบียบวิธีเชิงตัวเลข",
+                proj_2_desc: "การคำนวณด้วย Python",
+                btn_view_details: "ดูรายละเอียด",
+                proj_3_title: "กฎสี่เหลี่ยมคางหมู",
+                proj_3_desc: "การจำลองและคณิตศาสตร์",
+                btn_view_missions: "ดูภารกิจทั้งหมด",
+                contact_title: "ติดต่อ",
+                footer: "&copy; 2025 กอล์ฟ ชุตินัน สงวนลิขสิทธิ์",
+                modal_title: "เครื่องมือทั้งหมด"
+            }
+        };
+
+        function setLanguage(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Update Font Style
+            if (lang === 'th') {
+                document.body.classList.add('lang-th');
+            } else {
+                document.body.classList.remove('lang-th');
+            }
+
+            // Update Active Button State
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.toLowerCase() === lang) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+        
+        // Initialize default language
+        setLanguage('en'); 
+        // -----------------------------
+
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('closed');
+                mobileMenu.classList.add('open');
+                menuBtn.innerHTML = '<i data-lucide="x" class="w-8 h-8"></i>';
+                lucide.createIcons();
+            } else {
+                mobileMenu.classList.remove('open');
+                mobileMenu.classList.add('closed');
+                menuBtn.innerHTML = '<i data-lucide="menu" class="w-8 h-8"></i>';
+                lucide.createIcons();
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.remove('open');
+                mobileMenu.classList.add('closed');
+                menuBtn.innerHTML = '<i data-lucide="menu" class="w-8 h-8"></i>';
+                lucide.createIcons();
+            });
+        });
+
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('bg-black/90', 'backdrop-blur-sm');
+            } else {
+                header.classList.remove('bg-black/90', 'backdrop-blur-sm');
+            }
+        });
+
+        const tabs = document.querySelectorAll('.showcase-tab');
+        const projectsContent = document.getElementById('projects-content');
+        const certsContent = document.getElementById('certificates-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('active', 'text-white', 'border-b-2', 'border-white');
+                    t.classList.add('text-gray-500');
+                });
+                tab.classList.add('active', 'text-white', 'border-b-2', 'border-white');
+                tab.classList.remove('text-gray-500');
+
+                if (tab.dataset.content === 'projects') {
+                    projectsContent.classList.remove('hidden');
+                    certsContent.classList.add('hidden');
+                } else {
+                    projectsContent.classList.add('hidden');
+                    certsContent.classList.remove('hidden');
+                }
+            });
+        });
+
+        const allSkills = [
+            { name: 'Autocad', icon: 'images/cc.png' },
+            { name: 'Revit', icon: 'images/rr.png' },
+            { name: 'SketchUp', icon: 'images/ss.png' },
+            { name: 'MIDAS GTS NX', icon: 'images/vv.png' },
+            { name: 'ABAQUS', icon: 'images/aa.png' },
+            { name: 'SUTStructor', icon: 'images/sut.png' },
+            { name: 'KUslope', icon: 'images/ku.PNG' },
+            { name: 'Universal Mechanism', icon: 'images/umm.png' },
+            { name: 'Python', icon: 'images/ppp.png' },
+            { name: 'Mathcad', icon: 'images/mm.png' },
+            { name: 'HTML', icon: 'images/hh.png' },
+            { name: 'CSS', icon: 'images/ccc.png' },
+            { name: 'JavaScript', icon: 'images/jj.png' },
+            { name: 'PHP', icon: 'images/php.png' },
+            { name: 'Microsoft Office', icon: 'images/oo.png' },
+            { name: 'Visual Studio Code', icon: 'images/vvv.png' },
+            { name: 'PyCharm', icon: 'images/pp.png' },
+            { name: 'Photoshop', icon: 'images/pppp.png' },
+            { name: 'Canva', icon: 'images/cccc.png' },
+            { name: 'Lightroom', icon: 'images/ll.png' },
+            { name: 'Premiere Pro', icon: 'images/pr.png' },
+            { name: 'Dreamweaver', icon: 'images/dd.png' },
+            { name: 'Google Colab', icon: 'images/co.png' },
+            { name: 'Notion', icon: 'images/nn.png' },
+        ];
+
+        const skillsModal = document.getElementById('skills-modal');
+        const showAllBtn = document.getElementById('show-all-skills-btn');
+        const closeModalBtn = document.getElementById('modal-close-btn');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalGrid = document.getElementById('modal-skills-grid');
+
+        showAllBtn.addEventListener('click', () => {
+            modalGrid.innerHTML = '';
+            allSkills.forEach(skill => {
+                let iconHtml = skill.icon.includes('<img') ? skill.icon : `<img src="${skill.icon}" class="h-12 w-auto mx-auto filter invert">`;
+                
+                // Fix for local images if needed, assuming images are colored pngs we might not want to invert filter them if they are colored logos
+                if(skill.icon.includes('.png') || skill.icon.includes('.jpg')) {
+                     iconHtml = `<img src="${skill.icon}" class="h-12 w-auto mx-auto">`;
+                }
+
+                const div = document.createElement('div');
+                div.className = 'p-4 bg-black border border-gray-800 text-center hover:border-white transition-colors';
+                div.innerHTML = `
+                    <div class="h-16 flex items-center justify-center">${iconHtml}</div>
+                    <p class="mt-2 text-xs font-bold uppercase tracking-widest text-gray-400">${skill.name}</p>
+                `;
+                modalGrid.appendChild(div);
+            });
+            skillsModal.classList.remove('hidden');
+            skillsModal.classList.add('flex');
+        });
+
+        const closeModal = () => {
+            skillsModal.classList.add('hidden');
+            skillsModal.classList.remove('flex');
+        };
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', closeModal);
+
+    </script>
+</body>
+</html>
