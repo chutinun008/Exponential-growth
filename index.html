@@ -168,18 +168,26 @@
             border-top-right-radius: 4px;
             border-bottom-right-radius: 4px;
         }
+        
+        /* Responsive adjustments for buttons on mobile */
+        @media (max-width: 640px) {
+            .btn-spacex {
+                padding: 10px 30px;
+                width: 100%; /* Full width buttons on mobile */
+            }
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-white selection:text-black">
 
     <!-- Header -->
     <header class="fixed top-0 w-full z-50 transition-all duration-300" id="main-header">
-        <div class="container mx-auto px-6 py-6 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold tracking-widest uppercase z-50 flex items-center gap-2">
+        <div class="container mx-auto px-6 py-4 md:py-6 flex justify-between items-center">
+            <a href="#" class="text-xl md:text-2xl font-bold tracking-widest uppercase z-50 flex items-center gap-2">
                 GOLF / CHUTINUN
             </a>
             
-            <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 md:gap-8">
                 <!-- Desktop Nav -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="#home" class="nav-link" data-i18n="nav_home">HOME</a>
@@ -217,12 +225,13 @@
         <div class="absolute inset-0 bg-black/40"></div>
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-3xl" data-aos="fade-up" data-aos-duration="1000">
-                <h2 class="text-xl md:text-2xl tracking-[0.2em] mb-2 font-light" data-i18n="hero_role">CIVIL ENGINEERING STUDENT</h2>
-                <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tight leading-none">CHUTINUN<br>ARANYA</h1>
-                <p class="text-gray-300 text-lg md:text-xl max-w-xl mb-10 font-light" data-i18n="hero_desc">
+                <h2 class="text-lg md:text-2xl tracking-[0.2em] mb-2 font-light" data-i18n="hero_role">CIVIL ENGINEERING STUDENT</h2>
+                <!-- Adjusted text size for mobile -->
+                <h1 class="text-5xl md:text-8xl font-bold mb-6 tracking-tight leading-none" style="word-break: break-word;">CHUTINUN<br>ARANYA</h1>
+                <p class="text-gray-300 text-base md:text-xl max-w-xl mb-10 font-light" data-i18n="hero_desc">
                     PASSIONATE ABOUT ENGINEERING, TECHNOLOGY, AND AI.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4">
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                     <a href="#showcase" class="btn-spacex text-center" data-i18n="btn_projects">VIEW PROJECTS</a>
                     <a href="My_CV.pdf" download class="btn-spacex text-center" data-i18n="btn_cv">DOWNLOAD CV</a>
                 </div>
@@ -236,12 +245,12 @@
     </section>
 
     <!-- SECTION 2: ABOUT -->
-    <section id="about" class="relative py-24 border-b border-gray-900 bg-cover bg-center" style="background-image: url('images/dam.jpg');">
+    <section id="about" class="relative py-16 md:py-24 border-b border-gray-900 bg-cover bg-center" style="background-image: url('images/dam.jpg');">
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black/80"></div>
         
         <div class="container mx-auto px-6 relative z-10">
-            <div class="flex flex-col lg:flex-row gap-16 items-center">
+            <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
                 <div class="lg:w-1/2" data-aos="fade-right">
                     <img src="images/me.jpg" alt="Profile" class="w-full max-w-xs mx-auto rounded-sm shadow-2xl object-cover">
                 </div>
@@ -277,14 +286,14 @@
     </section>
 
     <!-- SECTION 3: SKILLS -->
-    <section id="skills" class="relative py-32 border-b border-gray-900 bg-cover bg-center" style="background-image: url('images/truss.jpg');">
+    <section id="skills" class="relative py-20 md:py-32 border-b border-gray-900 bg-cover bg-center" style="background-image: url('images/truss.jpg');">
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black/80"></div>
         
         <div class="container mx-auto px-6 relative z-10 text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-16 tracking-widest" data-aos="fade-up" data-i18n="skills_title">TECHNOLOGIES & TOOLS</h2>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8" data-aos="fade-up" data-aos-delay="200">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8" data-aos="fade-up" data-aos-delay="200">
                 <div class="p-4 border border-gray-800 hover:border-white transition-colors duration-300 group bg-black/50 backdrop-blur-sm">
                     <div class="h-12 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><img src="images/ppp.png" class="h-10 opacity-70 group-hover:opacity-100" alt="Python"></div>
                     <h3 class="text-sm text-gray-400 group-hover:text-white">PYTHON</h3>
@@ -318,11 +327,11 @@
     </section>
 
     <!-- SECTION 4: SHOWCASE -->
-    <section id="showcase" class="relative pt-24 pb-12 bg-cover bg-center" style="background-image: url('images/tunnel.jpg');">
+    <section id="showcase" class="relative pt-20 pb-12 md:pt-24 bg-cover bg-center" style="background-image: url('images/tunnel.jpg');">
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black/80"></div>
         
-        <div class="container mx-auto px-6 mb-12 flex justify-between items-end relative z-10">
+        <div class="container mx-auto px-6 mb-12 flex flex-col md:flex-row justify-between items-end relative z-10 gap-6">
             <div>
                  <h3 class="text-sky-500 tracking-widest text-sm font-bold mb-2" data-i18n="showcase_intro">02 / PORTFOLIO</h3>
                 <h2 class="text-4xl font-bold" data-i18n="showcase_title">LATEST MISSIONS</h2>
@@ -336,14 +345,14 @@
 
         <div class="container mx-auto px-6 relative z-10" id="projects-content">
             <!-- Featured Project -->
-            <div class="relative w-full h-[500px] mb-8 group overflow-hidden bg-gray-900" data-aos="fade-up">
+            <div class="relative w-full h-[350px] md:h-[500px] mb-8 group overflow-hidden bg-gray-900" data-aos="fade-up">
                 <img src="images/project.PNG" alt="Main Project" class="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500">
-                <div class="absolute bottom-0 left-0 p-8 md:p-12 w-full">
-                    <h3 class="text-3xl md:text-5xl font-bold mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500" data-i18n="proj_1_title">PORTFOLIO WEBSITE</h3>
-                    <p class="text-gray-300 max-w-xl mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100" data-i18n="proj_1_desc">
+                <div class="absolute bottom-0 left-0 p-6 md:p-12 w-full">
+                    <h3 class="text-2xl md:text-5xl font-bold mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500" data-i18n="proj_1_title">PORTFOLIO WEBSITE</h3>
+                    <p class="text-gray-300 max-w-xl mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 hidden md:block" data-i18n="proj_1_desc">
                         HTML CSS JavaScript Development for modern portfolio creation.
                     </p>
-                    <a href="#" class="btn-spacex text-sm px-8 py-3" data-i18n="btn_view_demo">VIEW DEMO</a>
+                    <a href="#" class="btn-spacex text-sm px-6 py-2 md:px-8 md:py-3 mt-2 md:mt-0" data-i18n="btn_view_demo">VIEW DEMO</a>
                 </div>
             </div>
 
@@ -384,14 +393,14 @@
     </section>
 
     <!-- SECTION 5: CONTACT -->
-    <section id="contact" class="relative py-24 border-t border-gray-900 bg-cover bg-center" style="background-image: url('images/blueprint.jpg');">
+    <section id="contact" class="relative py-16 md:py-24 border-t border-gray-900 bg-cover bg-center" style="background-image: url('images/blueprint.jpg');">
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black/80"></div>
         
         <div class="container mx-auto px-6 text-center relative z-10">
             <h2 class="text-4xl font-bold mb-12 tracking-wider" data-i18n="contact_title">CONTACT</h2>
             
-            <div class="flex flex-wrap justify-center gap-8 md:gap-16 mb-16">
+            <div class="flex flex-wrap justify-center gap-6 md:gap-16 mb-16">
                 <a href="https://github.com/your-username" class="flex flex-col items-center group">
                     <div class="w-16 h-16 border border-gray-700 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 mb-4 bg-black/50 backdrop-blur-sm">
                         <i data-lucide="github" class="w-6 h-6"></i>
@@ -674,5 +683,4 @@
 
     </script>
 </body>
-
 </html>
