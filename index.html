@@ -226,14 +226,13 @@
         <div class="container mx-auto px-6 relative z-10 pt-20">
             <div class="max-w-3xl" data-aos="fade-up" data-aos-duration="1000">
                 <h2 class="text-lg md:text-2xl tracking-[0.2em] mb-2 font-light" data-i18n="hero_role">CIVIL ENGINEERING STUDENT</h2>
-                <!-- Adjusted text size for mobile -->
                 <h1 class="text-5xl md:text-8xl font-bold mb-6 tracking-tight leading-none" style="word-break: break-word;">CHUTINUN<br>ARANYA</h1>
                 <p class="text-gray-300 text-base md:text-xl max-w-xl mb-10 font-light" data-i18n="hero_desc">
                     PASSIONATE ABOUT ENGINEERING, TECHNOLOGY, AND AI.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                     <a href="#showcase" class="btn-spacex text-center" data-i18n="btn_projects">VIEW PROJECTS</a>
-                    <a href="https://drive.google.com/file/d/1ERh6XxOZk0XDaVECo16FPZtDKWcBvD2A/view?usp=sharing" download class="btn-spacex text-center" data-i18n="btn_cv">DOWNLOAD RESUME and CV</a>
+                    <a href="https://drive.google.com/file/d/1ERh6XxOZk0XDaVECo16FPZtDKWcBvD2A/view?usp=sharing" download class="btn-spacex text-center" data-i18n="btn_cv">DOWNLOAD RESUME AND CV</a>
                 </div>
             </div>
         </div>
@@ -257,7 +256,6 @@
                 <div class="lg:w-1/2" data-aos="fade-left">
                     <h3 class="text-sky-500 tracking-widest text-sm font-bold mb-2" data-i18n="about_intro">01 / INTRODUCTION</h3>
                     <h2 class="text-4xl md:text-5xl font-bold mb-8" data-i18n="about_title">WHO AM I</h2>
-                    <!-- Default English Text -->
                     <p class="text-gray-400 leading-relaxed mb-6" data-i18n="about_desc">
                         Civil engineering student who loves problem-solving and innovation. Integrating engineering knowledge with technology to create efficient works. Learning from nature, focusing on user-centric design.
                     </p>
@@ -407,7 +405,7 @@
                     </div>
                     <span class="text-sm font-bold tracking-widest text-gray-500 group-hover:text-white">GITHUB</span>
                 </a>
-                <a href="https://linkedin.com/in/your-profile" class="flex flex-col items-center group">
+                <a href="https://linkedin.com" class="flex flex-col items-center group">
                     <div class="w-16 h-16 border border-gray-700 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 mb-4 bg-black/50 backdrop-blur-sm">
                         <i data-lucide="linkedin" class="w-6 h-6"></i>
                     </div>
@@ -460,7 +458,7 @@
                 hero_role: "CIVIL ENGINEERING STUDENT",
                 hero_desc: "PASSIONATE ABOUT ENGINEERING, TECHNOLOGY, AND AI.",
                 btn_projects: "VIEW PROJECTS",
-                btn_cv: "DOWNLOAD RESUME and CV",
+                btn_cv: "DOWNLOAD RESUME AND CV",
                 about_intro: "01 / INTRODUCTION",
                 about_title: "WHO AM I",
                 about_desc: "Civil engineering student who loves problem-solving and innovation. Integrating engineering knowledge with technology to create efficient works. Learning from nature, focusing on user-centric design.",
@@ -654,10 +652,9 @@
         showAllBtn.addEventListener('click', () => {
             modalGrid.innerHTML = '';
             allSkills.forEach(skill => {
-                let iconHtml = skill.icon.includes('<img') ? skill.icon : `<img src="${skill.icon}" class="h-12 w-auto mx-auto filter invert">`;
+                let iconHtml = skill.icon.includes('<img') ? skill.icon : `<img src="${skill.icon}" class="h-12 w-auto mx-auto">`;
                 
-                // Fix for local images if needed, assuming images are colored pngs we might not want to invert filter them if they are colored logos
-                if(skill.icon.includes('.png') || skill.icon.includes('.jpg')) {
+                if(skill.icon.includes('.png') || skill.icon.includes('.jpg') || skill.icon.includes('.PNG')) {
                      iconHtml = `<img src="${skill.icon}" class="h-12 w-auto mx-auto">`;
                 }
 
@@ -684,5 +681,3 @@
     </script>
 </body>
 </html>
-
-
